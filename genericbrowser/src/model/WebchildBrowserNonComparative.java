@@ -35,8 +35,8 @@ public void init(ServletConfig config) throws ServletException{
   super.init(config);
   if(Autocompletion.autoCompletionX == null)
     try{
-      Autocompletion.initAbsolCSKSortedByNumPatterns("./"
-        + "data/" + "preloaded.x.nouns");
+      Autocompletion.initAbsolCSKSortedByNumPatterns("/var/tmp/git-repository/"
+        + "genericbrowser/WebContent/data/preloaded.x.nouns");
       WebchildBrowserOld.variablesInit(true);
     } catch (Exception e){
       System.out.println("Exception in autocompletion setup!");
