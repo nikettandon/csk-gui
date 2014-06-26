@@ -46,6 +46,7 @@ public StringBuilder buildHTMLCode(){
   html.append(buildFixedMenu());
   html.append(buildForm());
   html.append(buildClusterContent());
+  html.append(buildRelatedDiv());
   html.append(endHtml());
   return html;
 }
@@ -340,6 +341,13 @@ private StringBuilder htmlizeAtom(Atom a){
   return atomHTML;
 }
 
+/****************************************
+ * 
+ */
+private StringBuilder buildRelatedDiv(){
+	StringBuilder htmlCode = new StringBuilder();
+	return htmlCode;
+}
 /****************************************
  HTML end markers. 
  ****************************************/
