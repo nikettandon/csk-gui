@@ -1,0 +1,40 @@
+<web-app xmlns:javaee="http://java.sun.com/xml/ns/javaee"
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<javaee:display-name>Webchild</javaee:display-name>
+	<javaee:description>
+		Webchild Servelets
+	</javaee:description>
+
+	<servlet>
+		<servlet-name>webchildnc</servlet-name>
+		<servlet-class>model.WebchildBrowserNonComparative</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>webchildnc</servlet-name>
+		<url-pattern>/webchildnc</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>webchild</servlet-name>
+		<servlet-class>model.WebchildBrowser</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>webchild</servlet-name>
+		<url-pattern>/webchild</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>webchildautocomplete</servlet-name>
+		<servlet-class>model.webchildautocomplete</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>webchildautocomplete</servlet-name>
+		<url-pattern>/webchildautocomplete</url-pattern>
+	</servlet-mapping>
+
+
+</web-app>

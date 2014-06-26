@@ -1,0 +1,98 @@
+.ui-tabs.ui-tabs-vertical {
+	padding: 0;
+	width: 42em;
+}
+
+.ui-tabs.ui-tabs-vertical .ui-widget-header {
+	border: none;
+}
+
+.ui-tabs.ui-tabs-vertical .ui-tabs-nav {
+	float: left;
+	width: 10em;
+	background: #CCC;
+	border-radius: 4px 0 0 4px;
+	border-right: 1px solid gray;
+}
+
+.ui-tabs.ui-tabs-vertical .ui-tabs-nav li {
+	clear: left;
+	width: 100%;
+	margin: 0.2em 0;
+	border: 1px solid gray;
+	border-width: 1px 0 1px 1px;
+	border-radius: 4px 0 0 4px;
+	overflow: hidden;
+	position: relative;
+	right: -2px;
+	z-index: 2;
+}
+
+.ui-tabs.ui-tabs-vertical .ui-tabs-nav li a {
+	display: block;
+	height: 0.9em;
+	width: 100%;
+	padding: 0.6em 1em;
+}
+
+.ui-tabs.ui-tabs-vertical .ui-tabs-nav li a:hover {
+	cursor: pointer;
+}
+
+.ui-tabs.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
+	margin-bottom: 0.2em;
+	padding-bottom: 0;
+	border-right: 1px solid white;
+}
+
+.ui-tabs.ui-tabs-vertical .ui-tabs-nav li:last-child {
+	margin-bottom: 10px;
+}
+
+.ui-tabs.ui-tabs-vertical .ui-tabs-panel {
+	float: left;
+	width: 28em;
+	border-left: 1px solid gray;
+	border-radius: 0;
+	position: relative;
+	left: -1px;
+}
+
+label {
+	display: inline-block;
+	width: 5em;
+}
+
+#myfixedheader {
+	position: fixed;
+	top: 0;
+	height: 50px;
+	width: 100%;
+	background-color: #ff0000;
+}
+
+/* #myabsolutecontent {<!--
+	position: absolute; -->
+	top: 20px;
+	bottom: 20px;
+	width: 100%; <!--
+	background-color: #0000ff; -->
+	overflow: auto;
+}
+ */
+.autocompletion-label {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 1em;
+}
+
+.autocompletion-icon {
+	float: left;
+	height: 32px;
+	width: 32px;
+}
+
+.autocompletion-description {
+	margin: 0;
+	padding: 0;
+}
