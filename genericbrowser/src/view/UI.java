@@ -45,8 +45,8 @@ public StringBuilder buildHTMLCode(){
   html.append(buildHeader());
   html.append(buildFixedMenu());
   html.append(buildForm());
-  html.append(buildClusterContent());
   html.append(buildRelatedDiv());
+  html.append(buildClusterContent());
   html.append(endHtml());
   return html;
 }
@@ -190,7 +190,6 @@ private StringBuilder buildForm(){
   StringBuilder formCode = new StringBuilder();
   formCode.append(formDiv1());
   formCode.append(formDiv2());
-
   for(buttonInfo b: form.buttons){
 
     //@formatter:off
@@ -245,7 +244,8 @@ private Object formDiv2(){
 
 private StringBuilder closeFormDiv(){
   StringBuilder formCode = new StringBuilder();
-  formCode.append("</div></div></div></fieldset></form></div></div>");
+  //formCode.append("</div></div></div></fieldset></form></div></div>");
+  formCode.append("</div></div></div></fieldset></form></div>");
   return formCode;
 }
 
@@ -342,10 +342,16 @@ private StringBuilder htmlizeAtom(Atom a){
 }
 
 /****************************************
- * 
+ * Construct div to show related words.
  */
 private StringBuilder buildRelatedDiv(){
 	StringBuilder htmlCode = new StringBuilder();
+	htmlCode.append("<div class=\"well sidebar-nav\">");
+	htmlCode.append("<div class=\"control-group\">");
+	htmlCode.append("<div class=\"controls\">");
+	//insert results
+	htmlCode.append("Related Words");
+	htmlCode.append("</div></div></div></div>");
 	return htmlCode;
 }
 /****************************************
@@ -354,7 +360,7 @@ private StringBuilder buildRelatedDiv(){
 private StringBuilder endHtml(){
   StringBuilder htmlCode = new StringBuilder();
   htmlCode.append("</div>  </div> </div> </div> <hr> </div>");
-
+  
   htmlCode.append("\n</BODY></HTML>\n");
   return htmlCode;
 }
