@@ -28,4 +28,12 @@
     <servlet-name>webchildautocomplete</servlet-name>
     <url-pattern>/webchildautocomplete</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>webchild1</servlet-name>
+    <servlet-class>model.WebchildBrowserInOne</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>webchild1</servlet-name>
+    <url-pattern>/webchild1</url-pattern>
+  </servlet-mapping>
 </web-app>
