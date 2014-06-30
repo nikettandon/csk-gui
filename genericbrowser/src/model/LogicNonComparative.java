@@ -160,7 +160,7 @@ private String shortenGloss(String gloss){
  * List similar nouns to X
  */
 private void findRelatedWords(String simX, List<Atom> relWords){
-	String[] arrX = simX.split("<br>");
+	String[] arrX = simX.trim().split("<br>");
 	List<String> relatedList = new ArrayList<String>();
 	
 	Decoration d = new Decoration(color.black, font.normal, boldface.normal, fontsize.normal,

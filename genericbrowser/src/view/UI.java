@@ -143,7 +143,7 @@ private StringBuilder cssFiles(){
     .append("\n<link rel=\"stylesheet\" type=\"text/css\" href=\"css/jquery-ui.css\" />");
   css
   // http://www.mpi-inf.mpg.de/~ntandon/verticalstyle.css
-    .append("\n<link rel=\"stylesheet\" type=\"text/css\" href=\"css/verticalstyle.css\" />");
+    .append("\n<link rel=\"stylesheet\" type=\"text/css\" href=\"css/verticalstyle.css?v=1.8\" />");
   
   if(autocomplete != null)
     css
@@ -310,7 +310,7 @@ private StringBuilder oneClusterContent(List<ResultRow> rows){
   // TODO better table formatting.. (incl. tb header).. datatable plugin?
   clusterHTML.append("\n<TABLE align='center' border=\"0\" width=\"600px\" ")
     .append("style='border-width:2px;border-spacing:10px;").append(
-      " border-color: black;'>\n<TBODY  height=\"400px\">\n");
+      " border-color: black;'>\n<TBODY>\n");
 
   for(ResultRow a: rows)
     clusterHTML.append(htmlizeRow(a)).append("\n");
@@ -337,7 +337,7 @@ Decorate atom, fill content etc.
 ****************************************/
 private StringBuilder htmlizeAtom(Atom a){
   StringBuilder atomHTML = new StringBuilder();
-  atomHTML.append("<td>");
+  atomHTML.append("<td style=\"padding-bottom:10px;\">");
   atomHTML.append("<a ").append(
     " style=\"color:" + a.decoration.c.name() + "\" ");
   // TODO more decoration reqd..
@@ -356,9 +356,9 @@ private StringBuilder buildRelatedDiv(){
 	htmlCode.append("<div class=\"well sidebar-nav\">");
 	htmlCode.append("<div class=\"control-group\">");
 	htmlCode.append("<div class=\"controls\">");
-	htmlCode.append("<h4>Related Words</h4>\n<ul style=\"list-style-type: none;padding:0;margin: 0px;\">\n");
+	htmlCode.append("<h4>Related Words</h4>\n<ul style=\"list-style-type: none;padding:0;margin: 0;\">\n");
 	for (Atom r: relatedWords){
-		htmlCode.append("\t<li><a ");
+		htmlCode.append("\t<li style=\"padding-bottom:5px;\"><a ");
 		htmlCode.append("style=\"color:"+r.decoration.c.name()+";");
 		htmlCode.append("font-weight:"+r.decoration.bf.name()+";\" ");
 		htmlCode.append("href=\""+r.hrefQuery+"\">");

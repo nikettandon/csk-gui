@@ -100,15 +100,15 @@ private String similarNoun(String x){
  */
 
 private void findRelatedWords(String X, String Y, String simX, String simY, List<Atom> relWords){
-	String[] arrX = simX.split("<br>");
-	String[] arrY = simY.split("<br>");
+	String[] arrX = simX.trim().split("<br>");
+	String[] arrY = simY.trim().split("<br>");
 	List<String> relatedList = new ArrayList<String>();
 	
 	Decoration d;
 	d = new Decoration(color.green, font.normal, boldface.bold, fontsize.normal,
 			      background.white);
 	for (String xs : arrX){
-		if (Arrays.asList(arrY).contains(xs) && xs.trim().length()>0){
+		if (Arrays.asList(arrY).contains(xs) && xs.length()>0){
 			relWords.add(new Atom(null, 0 , xs, "?x="+xs, xs, "", d));
 			relatedList.add(xs);
 		}
@@ -117,7 +117,7 @@ private void findRelatedWords(String X, String Y, String simX, String simY, List
 	d = new Decoration(color.red, font.normal, boldface.normal, fontsize.normal,
 		      background.white);
 	for (String xs : arrX){
-		if (!relatedList.contains(xs) && xs.trim().length()>0 && !xs.trim().equals(Y)){
+		if (!relatedList.contains(xs) && xs.length()>0 && !xs.equals(Y)){
 			relWords.add(new Atom(null, 0 , xs, "?x="+xs, xs, "", d));
 			relatedList.add(xs);
 		}
@@ -126,7 +126,7 @@ private void findRelatedWords(String X, String Y, String simX, String simY, List
 	d = new Decoration(color.black, font.normal, boldface.normal, fontsize.normal,
 		      background.white);
 	for (String ys : arrY){
-		if (!relatedList.contains(ys) && ys.trim().length()>0 && !ys.trim().equals(X)){
+		if (!relatedList.contains(ys) && ys.length()>0 && !ys.equals(X)){
 			relWords.add(new Atom(null, 0 , ys, "?x="+ys, ys, "", d));
 			relatedList.add(ys);
 		}
