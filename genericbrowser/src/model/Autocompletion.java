@@ -326,7 +326,7 @@ public static AutoMap<String, List<String>> autoCompletionXY;
 
 public static void main(String[] args) throws Exception{
   Autocompletion.initAbsolCSKSortedByNumPatterns(""
-    + "/home/ntandon/j2ee-workspace/genericbrowser/WebContent/data/"
+    + "/var/tmp/charles/git/csk-gui/genericbrowser/WebContent/data/"
     + "preloaded.x.nouns");
   String input = Util.readStringFromUser("noun: ");
   while (input.length() > 0){

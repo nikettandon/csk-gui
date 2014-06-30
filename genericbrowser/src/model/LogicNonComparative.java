@@ -2,6 +2,7 @@ package model;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -26,16 +27,17 @@ public class LogicNonComparative {
 
 private static int tripleID;
 private static Triple<String, String, String> disambiXAY;
-
+private static String similarToX;
 /**
  * @param in e.g. car,bike
  * @param atoms <car,fast,bike>; <bike,efficient,bike>
  * @return 
  */
-public String dbfetch(InputToModel in,List<Atom> atoms,List<ResultRow> rows){
+public String dbfetch(InputToModel in,List<Atom> atoms,List<ResultRow> rows, 
+    List<Atom> relatedWords){
   try{
     // if(rnormTriples == null) initRnormTriples();
-    // similarToX = similarNoun(in.x.get(0));
+    
     tripleID = 1;
     // TODO what if input is an adjective not noun?
     String inputtype = in.metadata.get(0).equals("a") ? "a" : "n";
@@ -45,6 +47,10 @@ public String dbfetch(InputToModel in,List<Atom> atoms,List<ResultRow> rows){
 
     disambiXAY = new Triple<String, String, String>(inputDisambiguated, "", "");
     Timer timer = new Timer();
+    // Fetch similar words
+    similarToX = similarNoun(in.x.get(0));
+    findRelatedWords(similarToX,relatedWords);
+    
     // Fetch matching csynsets
     System.out.println("Fetch matching csynsets ...");
 
@@ -148,6 +154,23 @@ private String shortenGloss(String gloss){
   if(gloss.length() <= 80)
     return gloss;
   else return gloss.substring(0, 80) + "...";
+}
+
+/*
+ * List similar nouns to X
+ */
+private void findRelatedWords(String simX, List<Atom> relWords){
+	String[] arrX = simX.trim().split("<br>");
+	List<String> relatedList = new ArrayList<String>();
+	
+	Decoration d = new Decoration(color.black, font.normal, boldface.normal, fontsize.normal,
+		      background.white);
+	for (String xs : arrX){
+		if (!relatedList.contains(xs) && xs.trim().length()>0){
+			relWords.add(new Atom(null, 0 , xs, "?x="+xs, xs, "", d));
+			relatedList.add(xs);
+		}
+	}	
 }
 
 /** man,woman --> fill important (high frequency/ size of csynset/

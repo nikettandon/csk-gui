@@ -32,6 +32,7 @@ private LinkedHashMap<String, List<ResultRow>> clusterContent =
 private Atom headerAtom;
 private SubmitForm form;
 private Autocomplete autocomplete;
+private List<Atom> relatedWords; 
 
 public UI(InputToView in) {
   parseInput(in);
@@ -83,6 +84,8 @@ private void parseInput(InputToView in){
   for(ResultRow row: in.rows){
     addToCluster(row._clusterName, row);
   }
+  this.relatedWords = in.relatedWords;
+  
 }
 
 private void addToCluster(String key,ResultRow row){
@@ -111,6 +114,8 @@ private StringBuilder buildHeader(){
     .append(".addClass('ui-tabs-vertical ui-helper-clearfix');}</script>\n");
   headerCode
     .append("<script> $( document ).ready(function() { $( document ).tooltip(); }); </script>\n");
+  headerCode
+  	.append("<script></script>\n");
   headerCode.append("</HEAD><BODY>\n");
   return headerCode;
 }
@@ -138,7 +143,8 @@ private StringBuilder cssFiles(){
     .append("\n<link rel=\"stylesheet\" type=\"text/css\" href=\"css/jquery-ui.css\" />");
   css
   // http://www.mpi-inf.mpg.de/~ntandon/verticalstyle.css
-    .append("\n<link rel=\"stylesheet\" type=\"text/css\" href=\"css/verticalstyle.css\" />");
+    .append("\n<link rel=\"stylesheet\" type=\"text/css\" href=\"css/verticalstyle.css?v=1.8\" />");
+  
   if(autocomplete != null)
     css
     // http://www.pengoworks.com/workshop/jquery/lib/jquery.autocomplete.css
@@ -218,7 +224,8 @@ private StringBuilder buildForm(){
     formCode.append("$( document ).ready(function() {$(\"#");
     formCode.append(autocomplete.onWhichFieldID + "\")");
     formCode.append(".autocomplete(\"" + autocomplete.usingWhichJSP
-      + "\" ,cacheLength=0 );");
+      + "\" ,cacheLength=0);");
+    formCode.append("$(\"#tabs ul li a\").click(function(){$(\"html, body\").animate({ scrollTop: 0 }, \"slow\");});");
     formCode.append("});</script>\n");
     /*
         //TODO experimental lines added to retain focus on query input box.
@@ -303,7 +310,7 @@ private StringBuilder oneClusterContent(List<ResultRow> rows){
   // TODO better table formatting.. (incl. tb header).. datatable plugin?
   clusterHTML.append("\n<TABLE align='center' border=\"0\" width=\"600px\" ")
     .append("style='border-width:2px;border-spacing:10px;").append(
-      " border-color: black;'>\n<TBODY  height=\"400px\">\n");
+      " border-color: black;'>\n<TBODY>\n");
 
   for(ResultRow a: rows)
     clusterHTML.append(htmlizeRow(a)).append("\n");
@@ -330,7 +337,7 @@ Decorate atom, fill content etc.
 ****************************************/
 private StringBuilder htmlizeAtom(Atom a){
   StringBuilder atomHTML = new StringBuilder();
-  atomHTML.append("<td>");
+  atomHTML.append("<td style=\"padding-bottom:10px;\">");
   atomHTML.append("<a ").append(
     " style=\"color:" + a.decoration.c.name() + "\" ");
   // TODO more decoration reqd..
@@ -349,9 +356,23 @@ private StringBuilder buildRelatedDiv(){
 	htmlCode.append("<div class=\"well sidebar-nav\">");
 	htmlCode.append("<div class=\"control-group\">");
 	htmlCode.append("<div class=\"controls\">");
-	//insert results
-	htmlCode.append("Related Words");
-	htmlCode.append("</div></div></div></div>");
+	htmlCode.append("<h4>Related Words</h4>\n<ul style=\"list-style-type: none;padding:0;margin: 0;\">\n");
+	for (Atom r: relatedWords){
+		htmlCode.append("\t<li style=\"padding-bottom:5px;\"><a ");
+		htmlCode.append("style=\"color:"+r.decoration.c.name()+";");
+		htmlCode.append("font-weight:"+r.decoration.bf.name()+";\" ");
+		htmlCode.append("href=\""+r.hrefQuery+"\">");
+		htmlCode.append(r.content).append("</a></li>\n");
+	}
+	/*for(Entry<String, List<ResultRow>> e: clusterContent.entrySet()){
+		for(ResultRow a: e.getValue()){
+			for(Atom at: a._rowElems){
+				htmlCode.append(at.toString()+"<br>");
+
+			}
+		}
+	}*/
+	htmlCode.append("</ul></div></div></div></div>");
 	return htmlCode;
 }
 /****************************************

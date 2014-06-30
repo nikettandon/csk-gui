@@ -3,9 +3,13 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -46,14 +50,13 @@ private static String similarToY;
  * @param atoms <car,fast,bike>; <bike,efficient,bike>
  * @return 
  */
-public String dbfetch(InputToModel in,List<Atom> atoms,List<ResultRow> rows){
+public String dbfetch(InputToModel in,List<Atom> atoms,List<ResultRow> rows, List<Atom> relatedWords){
   try{
     if(oppCsynsets == null) initOppCSynsets();
     if(rnormTriples == null) initRnormTriples();
 
     similarToX = similarNoun(in.x.get(0));
     similarToY = similarNoun(in.x.get(1));
-
     tripleID = 1;
     disambiXAY =
       new Triple<String, String, String>(in.x.get(0), "", in.x.get(1));
@@ -67,6 +70,7 @@ public String dbfetch(InputToModel in,List<Atom> atoms,List<ResultRow> rows){
     // For each csynset, construct UIAtoms from synset member ctriples.
     System.out.println("For each csynset, construct UIAtoms of ctriples ...");
     // fillCSynsetAtomsUnordered(pairedCyn, atoms);
+    findRelatedWords(in.x.get(0), in.x.get(1), similarToX,similarToY, relatedWords);
     fillCSynsetAtomsOrdered(pairedCyn, rows);
     timer.time("created GUI ");
   } catch (Exception e){
@@ -88,6 +92,45 @@ private String similarNoun(String x){
     returnStr.append(y).append(newLine);
   }
   return returnStr.toString();
+}
+
+
+/**
+ * Currently combining all similar nouns to both X and Y
+ */
+
+private void findRelatedWords(String X, String Y, String simX, String simY, List<Atom> relWords){
+	String[] arrX = simX.trim().split("<br>");
+	String[] arrY = simY.trim().split("<br>");
+	List<String> relatedList = new ArrayList<String>();
+	
+	Decoration d;
+	d = new Decoration(color.green, font.normal, boldface.bold, fontsize.normal,
+			      background.white);
+	for (String xs : arrX){
+		if (Arrays.asList(arrY).contains(xs) && xs.length()>0){
+			relWords.add(new Atom(null, 0 , xs, "?x="+xs, xs, "", d));
+			relatedList.add(xs);
+		}
+	}
+
+	d = new Decoration(color.red, font.normal, boldface.normal, fontsize.normal,
+		      background.white);
+	for (String xs : arrX){
+		if (!relatedList.contains(xs) && xs.length()>0 && !xs.equals(Y)){
+			relWords.add(new Atom(null, 0 , xs, "?x="+xs, xs, "", d));
+			relatedList.add(xs);
+		}
+	}
+
+	d = new Decoration(color.black, font.normal, boldface.normal, fontsize.normal,
+		      background.white);
+	for (String ys : arrY){
+		if (!relatedList.contains(ys) && ys.length()>0 && !ys.equals(X)){
+			relWords.add(new Atom(null, 0 , ys, "?x="+ys, ys, "", d));
+			relatedList.add(ys);
+		}
+	}	
 }
 
 /**
