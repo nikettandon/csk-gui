@@ -46,14 +46,15 @@ protected void doGet(HttpServletRequest request,HttpServletResponse response)
   List<Atom> atomsWithHeader = new ArrayList<>();
   atomsWithHeader.add(header());
   List<ResultRow> rows = new ArrayList<>();
+  List<Atom> relatedWords = new ArrayList<>();
   String resultsSummary =
-    modelProxy.dbfetch(formInputToModel(request), atomsWithHeader, rows);
+    modelProxy.dbfetch(formInputToModel(request), atomsWithHeader, rows, relatedWords);
   atomsWithHeader.add(new Atom(AtomType.resultSummary, -2, resultsSummary, "",
     "disambiguation", "resultssummary", new Decoration()));
   // UI
   SubmitForm form = formInputToUI("GET", "webchild");
   Autocomplete ac = new Autocomplete("x", "jsp/autocomplete.jsp");
-  UI uiProxy = new UI(new InputToView(form, atomsWithHeader, rows, ac));
+  UI uiProxy = new UI(new InputToView(form, atomsWithHeader, rows, relatedWords, ac));
   // Construct response
   StringBuilder responseText = uiProxy.buildHTMLCode();
   PrintWriter out = response.getWriter();

@@ -13,6 +13,7 @@ public List<Atom> metaAtoms;
 public List<ResultRow> rows;
 public SubmitForm form;
 public Autocomplete autocomplete;
+public List<Atom> relatedWords; 
 
 /*********************************************************
  Assumes that the application has no autocomplete feature
@@ -20,7 +21,8 @@ public Autocomplete autocomplete;
  Many atoms (incl. header) make up the input to UI.
  Submit form is for form based applications.
  *********************************************************/
-public InputToView(SubmitForm form,List<Atom> metaAtoms,List<ResultRow> rows) {
+public InputToView(SubmitForm form,List<Atom> metaAtoms,List<ResultRow> rows,
+  List<Atom> relatedWords) {
   this.metaAtoms = new ArrayList<>();
   for(Atom a: metaAtoms)
     if(a != null) this.metaAtoms.add(a);
@@ -30,6 +32,7 @@ public InputToView(SubmitForm form,List<Atom> metaAtoms,List<ResultRow> rows) {
     if(resultRow != null) this.rows.add(resultRow);
 
   this.form = form;
+  this.relatedWords = relatedWords;
 }
 
 /*********************************************************
@@ -38,9 +41,9 @@ Many atoms (incl. header) make up the input to UI.
 Submit form is for form based applications. Autocompletion 
 e.g. when user types x:bike; autoSuggest y:bus,car 
 *********************************************************/
-public InputToView(SubmitForm form,List<Atom> atoms,List<ResultRow> rows,
-  Autocomplete autoC) {
-  this(form, atoms, rows);
+public InputToView(SubmitForm form,List<Atom> atoms,List<ResultRow> rows, 
+  List<Atom> relatedWords, Autocomplete autoC) {
+  this(form, atoms, rows, relatedWords);
   this.autocomplete = autoC;
 }
 

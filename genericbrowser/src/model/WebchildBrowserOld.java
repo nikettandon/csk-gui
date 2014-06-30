@@ -33,7 +33,7 @@ import util.Util.Timer;
  */
 public class WebchildBrowserOld extends HttpServlet {
 private static final long serialVersionUID = 1L;
-private static Database db;
+public static Database db;
 private static String hasPropertyUnclassifiedTb = "hasproperty2sdisambiguated";
 private static String hasPropertyClassifiedTb = "_tupletempwithfreqgms"; // _tupletemp
 public static Map<String, Integer> neededRelations;
