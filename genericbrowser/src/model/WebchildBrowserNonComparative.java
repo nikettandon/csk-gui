@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,13 +31,14 @@ import controller.InputToView.SubmitForm.buttonInfo;
  */
 public class WebchildBrowserNonComparative extends HttpServlet {
 private static final long serialVersionUID = 1L;
-
+private static ServletContext context;
 public void init(ServletConfig config) throws ServletException{
   super.init(config);
+  context = getServletContext();
   if(Autocompletion.autoCompletionX == null)
     try{
-      Autocompletion.initAbsolCSKSortedByNumPatterns("/var/tmp/charles/git/csk-gui/"
-        + "genericbrowser/WebContent/data/preloaded.x.nouns");
+      Autocompletion.initAbsolCSKSortedByNumPatterns(context.getContextPath()
+        + "WebContent/data/preloaded.x.nouns");
       WebchildBrowserOld.variablesInit(true);
     } catch (Exception e){
       System.out.println("Exception in autocompletion setup!");
