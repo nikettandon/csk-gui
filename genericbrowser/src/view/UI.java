@@ -347,12 +347,24 @@ Decorate atom, fill content etc.
 private StringBuilder htmlizeAtom(Atom a){
   StringBuilder atomHTML = new StringBuilder();
   atomHTML.append("<td style=\"padding-bottom:10px;\">");
-  atomHTML.append("<a class=\"word\"").append(
-    " style=\"color:" + a.decoration.c.name() + "\" ");
+ 
   // TODO more decoration reqd..
-  atomHTML.append("title=\"").append(a.tooltip).append("\"");
-  atomHTML.append(" href=\"?x=" + a.hrefQuery + "\"> ");
-  atomHTML.append(a.content).append(" </a>\t");
+  
+  if (a.hrefQuery!=null){
+	  atomHTML.append("<a class=\"word\"").append(
+			    " style=\"color:" + a.decoration.c.name() + "\" ");
+	  if (a.hrefQuery.contains("?x")){
+	    System.out.println(a.hrefQuery);
+	    atomHTML.append(" href=\"" + a.hrefQuery +"\t");
+	  }
+	  else{
+		  atomHTML.append("title=\"").append(a.tooltip).append("\"");
+		  atomHTML.append(" href=\"?x=" + a.hrefQuery + "\"> ");
+		  atomHTML.append(a.content).append(" </a>\t");
+	  }
+  }
+  else
+	  atomHTML.append(a.content).append("\t");
   atomHTML.append("</td>\n");
   return atomHTML;
 }

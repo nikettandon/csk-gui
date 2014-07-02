@@ -850,6 +850,7 @@ private static String formHref(String x,String xWithID){
       "/" + ckbProjectName + "/" + ckbBrowserName + "?x=" + xWithID;
     o.append("<a href =\"").append(hrefString).append("\">").append(x).append(
       "</a>");
+
     return o.toString();
   } else{
     return formHref(x, xWithID, "1.0");
@@ -884,7 +885,7 @@ private static String formHref(String x,String xWithID,String support){
   String hrefString =
     "/" + ckbProjectName + "/" + ckbBrowserName + "?x=" + href;
   // <a href ommitted because it will be added in the yagolikebrowser util..
-  o.append("\"").append(hrefString).append("\" ").append(mouseOverStr).append(
+  o.append(hrefString).append("\" ").append(mouseOverStr).append(
     " >").append(xWord).append("</a>");
   return o.toString();
 }
