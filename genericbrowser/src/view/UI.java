@@ -109,11 +109,17 @@ private StringBuilder buildHeader(){
   headerCode.append(jsFiles());
   // JS code for vertical tabs; tooltip.
   headerCode
-    .append("<script type=\"text/javascript\"> window.onload=function(){  $('#tabs').tabs()");
+    .append("<script type=\"text/javascript\"> window.onload=function(){$('#tabs').tabs()");
   headerCode
     .append(".addClass('ui-tabs-vertical ui-helper-clearfix');}</script>\n");
+/*  headerCode
+    .append("<script> $( document ).ready(function() { $(\".loading\").fadeOut();");
   headerCode
-    .append("<script> $( document ).ready(function() { $( document ).tooltip(); }); </script>\n");
+  	.append("$( document ).tooltip();$( \"#x\" ).tooltip({ position: { my: \"top-25%\", at: \"right center\" } });");
+  headerCode
+	.append(" $(\"#go, a.word\").click(function(){$(\".loading\").fadeIn();});");
+  headerCode
+  	.append("$(window).on('unload', function(){$(\".loading\").fadeOut();});});</script>\n");*/
   headerCode
   	.append("<script></script>\n");
   headerCode.append("</HEAD><BODY>\n");
@@ -177,6 +183,10 @@ private StringBuilder jsFiles(){
   // http://code.jquery.com/ui/1.9.1/jquery-ui.js ; jquery-ui-1.10.2.js
   .append("<script src=\"js/jquery-ui.js\">");
   js.append("</script>\n");
+  
+  js
+  .append("<script src=\"js/genericbrowser.js\">");
+  js.append("</script>\n");
 
   if(autocomplete != null){
     js
@@ -196,11 +206,12 @@ private StringBuilder buildForm(){
   StringBuilder formCode = new StringBuilder();
   formCode.append(formDiv1());
   formCode.append(formDiv2());
+  
   for(buttonInfo b: form.buttons){
 
     //@formatter:off
     formCode
-      .append("\n<br><br><input ")
+      .append("\n<input ")
       .append(" id=\"").append(b.id).append("\"")
       .append(" type=\"").append(b.type).append("\"")
       .append(" name=\"").append(b.name).append("\"")
@@ -212,7 +223,6 @@ private StringBuilder buildForm(){
       .append(">\n");
     //@formatter:on 
   }
-
   // Autocompletion code.
   // myautocomplete('x', 'jsp/autocomplete.jsp');
   if(autocomplete != null){
@@ -225,7 +235,6 @@ private StringBuilder buildForm(){
     formCode.append(autocomplete.onWhichFieldID + "\")");
     formCode.append(".autocomplete(\"" + autocomplete.usingWhichJSP
       + "\" ,cacheLength=0);");
-    formCode.append("$(\"#tabs ul li a\").click(function(){$(\"html, body\").animate({ scrollTop: 0 }, \"slow\");});");
     formCode.append("});</script>\n");
     /*
         //TODO experimental lines added to retain focus on query input box.
@@ -338,7 +347,7 @@ Decorate atom, fill content etc.
 private StringBuilder htmlizeAtom(Atom a){
   StringBuilder atomHTML = new StringBuilder();
   atomHTML.append("<td style=\"padding-bottom:10px;\">");
-  atomHTML.append("<a ").append(
+  atomHTML.append("<a class=\"word\"").append(
     " style=\"color:" + a.decoration.c.name() + "\" ");
   // TODO more decoration reqd..
   atomHTML.append("title=\"").append(a.tooltip).append("\"");
@@ -358,7 +367,7 @@ private StringBuilder buildRelatedDiv(){
 	htmlCode.append("<div class=\"controls\">");
 	htmlCode.append("<h4>Related Words</h4>\n<ul style=\"list-style-type: none;padding:0;margin: 0;\">\n");
 	for (Atom r: relatedWords){
-		htmlCode.append("\t<li style=\"padding-bottom:5px;\"><a ");
+		htmlCode.append("\t<li style=\"padding-bottom:5px;\"><a class=\"word\" ");
 		htmlCode.append("style=\"color:"+r.decoration.c.name()+";");
 		htmlCode.append("font-weight:"+r.decoration.bf.name()+";\" ");
 		htmlCode.append("href=\""+r.hrefQuery+"\">");
@@ -381,7 +390,7 @@ private StringBuilder buildRelatedDiv(){
 private StringBuilder endHtml(){
   StringBuilder htmlCode = new StringBuilder();
   htmlCode.append("</div>  </div> </div> </div> <hr> </div>");
-  
+  htmlCode.append("<div class=\"loading\">Loading&#8230;</div>");
   htmlCode.append("\n</BODY></HTML>\n");
   return htmlCode;
 }
