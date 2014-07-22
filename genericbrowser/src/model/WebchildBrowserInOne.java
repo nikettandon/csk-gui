@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,11 +33,17 @@ import controller.InputToView.SubmitForm.buttonInfo;
 /**
  * Servlet implementation class Controller
  */
+
 public class WebchildBrowserInOne extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	//To retrieve context path
+	public static ServletContext context;
+	
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
+	
+		context = getServletContext();
+		
 		try {
 			WebchildBrowserOld.variablesInit(false);
 		} catch (SQLException e1) {
@@ -50,8 +57,8 @@ public class WebchildBrowserInOne extends HttpServlet {
 		if (Autocompletion.autoCompletionX == null)
 			try {
 				Autocompletion
-						.initAbsolCSKSortedByNumPatterns("/home/chariman/git/csk-gui/"
-								+ "genericbrowser/WebContent/data/preloaded.x.nouns");
+						.initAbsolCSKSortedByNumPatterns(context.getRealPath("/")
+								+"WebContent/data/preloaded.x.nouns");
 				WebchildBrowserOld.variablesInit(true);
 			} catch (Exception e) {
 				System.out.println("Exception in autocompletion setup!");
@@ -62,6 +69,8 @@ public class WebchildBrowserInOne extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// Atoms
+		context = getServletContext();
+		
 		List<Atom> atomsWithHeader = new ArrayList<>();
 		atomsWithHeader.add(header());
 		List<ResultRow> rows = new ArrayList<>();

@@ -55,6 +55,15 @@ public static double idf(int totDocs,int myfreq){
   return antilog <= 0 ? -1.0 : Math.log10(antilog);
 }
 
+public static <T, V> void writeFile(String filePath,Map<T, V> map,
+  boolean shouldAppend,String kvSeparator) throws IOException{
+  BufferedWriter out =
+    new BufferedWriter(new FileWriter(filePath, shouldAppend));
+  for(Entry<T, V> e: map.entrySet())
+    out.write((T) e.getKey() + kvSeparator + (V) e.getValue() + "\n");
+  out.close();
+}
+
 public static <F> String join(F[] arr,String separator){
   StringBuilder s = new StringBuilder();
   if(arr == null || arr.length == 0) return s.toString();

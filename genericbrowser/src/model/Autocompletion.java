@@ -67,6 +67,31 @@ public static List<String> y(String xCSVyOpt,int max){
   return y;
 }
 
+public static List<String> event(String x,int max){
+
+  // System.out.print("\nAutocompletion for " + xCSVyOpt + " started ... ");
+  List<String> y = new ArrayList<String>();
+  // TODO adding dummy suggestion; GUI not clearing old suggestion
+  // y.add(xCSVyOpt);
+  y.add(" ");
+
+  if(x == null || x.length() == 0) return y;
+
+  try{
+
+    for(String myX: Util.nullableIter(Autocompletion.autoCompletionEvent
+      .autoComplete(x))){
+      y.add(myX);
+      if(--max < 0) break;
+    }
+
+  } catch (Exception e){
+    System.out.println("Exception during autocomplete suggestions of " + x
+      + "\n\tdetail: " + e.getMessage());
+  }
+  return y;
+}
+
 public static void x(List<String> y,String xCSVyOpt,int max){
   for(String myX: Util.nullableIter(Autocompletion.autoCompletionX
     .autoComplete(xCSVyOpt))){
@@ -320,7 +345,7 @@ protected Collection<String> allPrefixes(){
 }
 }
 
-public static Trie autoCompletionX;
+public static Trie autoCompletionX,autoCompletionEvent;
 // TODO the Autocompletion class could not retain the static list, initialized everytime.
 public static AutoMap<String, List<String>> autoCompletionXY;
 

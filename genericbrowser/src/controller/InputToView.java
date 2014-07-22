@@ -13,7 +13,7 @@ public List<Atom> metaAtoms;
 public List<ResultRow> rows;
 public SubmitForm form;
 public Autocomplete autocomplete;
-public List<Atom> relatedWords; 
+public List<Atom> relatedWords;
 
 /*********************************************************
  Assumes that the application has no autocomplete feature
@@ -41,8 +41,8 @@ Many atoms (incl. header) make up the input to UI.
 Submit form is for form based applications. Autocompletion 
 e.g. when user types x:bike; autoSuggest y:bus,car 
 *********************************************************/
-public InputToView(SubmitForm form,List<Atom> atoms,List<ResultRow> rows, 
-  List<Atom> relatedWords, Autocomplete autoC) {
+public InputToView(SubmitForm form,List<Atom> atoms,List<ResultRow> rows,
+  List<Atom> relatedWords,Autocomplete autoC) {
   this(form, atoms, rows, relatedWords);
   this.autocomplete = autoC;
 }
@@ -178,6 +178,10 @@ public String tooltip;
 public String clusterName;
 /**  e.g. make the atom bold or colored */
 public Decoration decoration;
+
+public Atom(String content) {
+  this(AtomType.content, -4, content, "", "", "", new Decoration());
+}
 
 public Atom(AtomType type,int atomID,String content,String hrefQuery,
   String tooltip,String clusterName,Decoration decoration) {
